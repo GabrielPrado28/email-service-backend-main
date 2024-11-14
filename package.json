@@ -1,0 +1,26 @@
+{
+  "name": "phishing-simulation",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@fastify/cors": "^8.2.1",
+    "@fastify/formbody": "^7.4.0",
+    "aws-sdk": "^2.1360.0",
+    "banco-dados-avancado": "file:",
+    "bull": "^4.10.4",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.17.0",
+    "phishing-simulation": "file:"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
