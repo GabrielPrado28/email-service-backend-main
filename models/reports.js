@@ -1,27 +1,36 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class reports extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+  const Report = sequelize.define('Report', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',  // Nome da tabela de referência
+        key: 'id'        // Chave primária da tabela de referência
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    },
+    status: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
     }
-  }
-  reports.init({
-    id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-    nome: DataTypes.STRING,
-    email: DataTypes.STRING
   }, {
-    sequelize,
-    modelName: 'reports',
+    tableName: 'reports',  // Nome da tabela no banco de dados
+    timestamps: false      // Desativa timestamps automáticos (createdAt, updatedAt)
   });
-  return reports;
+
+  Report.associate = (models) => {
+    Report.belongsTo(models.User, { foreignKey: 'user_id' });
+  };
+
+  return Report;
 };
