@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "admin",
+    "database": "phishing_simulation",
+    "host": "localhost",
+    "port": 3307,
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "admin",
+    "database": "phishing_simulation",
+    "host": "localhost",
+    "port": 3307,
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "admin",
+    "database": "phishing_simulation",
+    "host": "localhost",
+    "port": 3307,
+    "dialect": "mysql"
+  }
+}
