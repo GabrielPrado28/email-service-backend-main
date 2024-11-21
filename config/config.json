@@ -2,11 +2,7 @@
   "development": {
     "username": "root",
     "password": "admin",
-<<<<<<< HEAD
     "database": "phishing_simulation",
-=======
-    "database": "MariaDB",
->>>>>>> 6831f34499ea52d03faaeca697d380fdb25259c7
     "host": "localhost",
     "port": 3307,
     "dialect": "mysql"
@@ -14,11 +10,7 @@
   "test": {
     "username": "root",
     "password": "admin",
-<<<<<<< HEAD
     "database": "phishing_simulation",
-=======
-    "database": "MariaDB",
->>>>>>> 6831f34499ea52d03faaeca697d380fdb25259c7
     "host": "localhost",
     "port": 3307,
     "dialect": "mysql"
@@ -26,17 +18,9 @@
   "production": {
     "username": "root",
     "password": "admin",
-<<<<<<< HEAD
     "database": "phishing_simulation",
-=======
-    "database": "MariaDB",
->>>>>>> 6831f34499ea52d03faaeca697d380fdb25259c7
     "host": "localhost",
     "port": 3307,
     "dialect": "mysql"
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 6831f34499ea52d03faaeca697d380fdb25259c7
