@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+import { resolve } from "path";
 dotenv.config(); // Carregar variáveis de ambiente antes de qualquer configuração
 
 const { connectDB, sequelize } = require('./config/database');
