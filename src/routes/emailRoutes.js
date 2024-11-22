@@ -1,6 +1,6 @@
 const express = require('express');
 const { sendEmail, getEmails } = require('../controllers/emailController');
-const User = require('../models/User'); // Importar o modelo de teste
+const User = require('../models/user'); // Importar o modelo de teste
 
 const router = express.Router();
 

@@ -1,33 +1,40 @@
-const express = require('express');
-const dotenv = require('dotenv');
-import { resolve } from "path";
-dotenv.config(); // Carregar variáveis de ambiente antes de qualquer configuração
+import { resolve } from 'path';
 
-const { connectDB, sequelize } = require('./config/database');
-const emailRoutes = require('./routes/emailRoutes');
-const errorHandler = require('./middleware/errorHandler');
+import './database';
 
-// Inicializar o Express
-const app = express();
+import express from 'express';
 
-// Middleware para JSON
-app.use(express.json());
+import homeRoutes from './routes/homeRoutes';
+import userRoutes from './routes/userRoutes';
 
-// Conectar ao banco de dados MariaDB e sincronizar os modelos
-connectDB().then(() => {
-    sequelize.sync()
-        .then(() => console.log('Modelos sincronizados com o banco de dados.'))
-        .catch(error => console.error('Erro ao sincronizar os modelos:', error));
-});
 
-// Rotas
-app.use('/api/email', emailRoutes); // Usa as rotas de e-mail
+const corsOptions = {
+  origin: function (origin, callback) {
+    if(whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
 
-// Middleware de tratamento de erros (colocar sempre após as rotas)
-app.use(errorHandler);
+class App {
+  constructor() {
+    this.app = express();
+    this.middlewares();
+    this.routes();
+  }
 
-// Inicializa o servidor
-const PORT = process.env.PORT || 3307;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+  middlewares() {
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json());
+    this.app.use('/images/', express.static(resolve(__dirname, '..', 'uploads', 'images')));
+  }
+
+  routes() {
+    this.app.use('/', homeRoutes);
+    this.app.use('/users/', userRoutes);
+  }
+}
+
+export default new App().app;
