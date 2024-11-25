@@ -8,16 +8,6 @@ import homeRoutes from './routes/homeRoutes';
 import userRoutes from './routes/userRoutes';
 
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if(whiteList.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-};
-
 class App {
   constructor() {
     this.app = express();

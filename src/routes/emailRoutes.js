@@ -1,24 +1,18 @@
-const express = require('express');
-const { sendEmail, getEmails } = require('../controllers/emailController');
-const User = require('../models/user'); // Importar o modelo de teste
+import { Router } from 'express';
+import emailController from '../controllers/EmailController';
+import loginRequired from '../middlewares/loginRequired';
 
-const router = express.Router();
+const router = new Router();
 
-// Definir rotas e associá-las aos controladores
-router.post('/send', sendEmail); // Rota para enviar e-mails
-router.get('/all', getEmails);    // Rota para obter todos os e-mails
+// Rota para envio de e-mails (sem login necessário)
+router.post('/', emailController.sendEmail);
 
-// Rota temporária para teste de banco de dados
-router.post('/test-user', async (req, res) => {
-  try {
-    const user = await User.create({
-      name: 'Test User',
-      email: 'test@example.com',
-    });
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar usuário' });
-  }
-});
+// Rota para obter todos os e-mails (apenas usuários autenticados)
+router.get('/', loginRequired, emailController.getEmails);
 
-module.exports = router;
+export default router;
+
+/*
+sendEmail -> envia um novo e-mail -> POST
+getEmails -> lista todos os e-mails -> GET
+*/
