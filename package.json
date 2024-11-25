@@ -2,8 +2,9 @@
   "name": "phishing-simulation",
   "version": "1.0.0",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "dev": "node src/app.js",
+    "dev": "nodemon src/server.js",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,10 +20,9 @@
     "bull": "^4.10.4",
     "dotenv": "^16.0.3",
     "fastify": "^4.17.0",
-    "phishing-simulation": "file:"
-  },
-  "devDependencies": {
     "jest": "^29.5.0",
-    "sequelize-cli": "^6.6.2"
-  }
+    "nodemon": "^2.0.7",
+    "sequelize-cli": "^6.6.2",
+    "phishing-simulation": "file:"
+  } 
 }
