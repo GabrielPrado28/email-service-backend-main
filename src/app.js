@@ -1,11 +1,16 @@
-import { resolve } from 'path';
+import { fileURLToPath } from 'url';  // Adicione isso para poder usar import.meta.url
+import { dirname, resolve } from 'path'; // Importar os métodos do path
 
-import './database';
+// Simulando __dirname em ES Modules
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+import './database/index.js';
+
 
 import express from 'express';
 
-import userRoutes from './routes/userRoutes';
-import emailRoutes from './routes/emailRoutes';
+import userRoutes from './routes/userRoutes.js';
+import emailRoutes from './routes/emailRoutes.js';
 
 
 class App {
@@ -21,10 +26,9 @@ class App {
     this.app.use('/images/', express.static(resolve(__dirname, '..', 'uploads', 'images')));
   }
 
-  routes() {
-    this.app.use('/', homeRoutes);
-    this.app.use('/users/', userRoutes);
+  routes() {   
     this.app.use('/emails/', emailRoutes);
+    this.app.use('/users/', userRoutes);
   }
 }
 

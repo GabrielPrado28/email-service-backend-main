@@ -1,89 +1,22 @@
-import Email from '../models/email';
+import Email from '../models/email.js';
 
-class EmailController {
-  // Criação de um novo e-mail
-  async store(req, res) {
+// Função para enviar e-mails
+export async function sendEmail(req, res) {
+    const { to, subject, body } = req.body;
     try {
-      const novoEmail = await Email.create(req.body);
-      const { id, to, from, subject, body, status, sentAt } = novoEmail;
-      return res.json({ id, to, from, subject, body, status, sentAt });
-    } catch (e) {
-      return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
-      });
+        const email = await Email.create({ to, from: process.env.EMAIL_FROM, subject, body, status: 'pending' });
+        res.status(200).json({ message: 'E-mail enviado com sucesso!', email });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao enviar o e-mail.', error });
     }
-  }
-
-  // Lista todos os e-mails
-  async index(req, res) {
-    try {
-      const emails = await Email.findAll({
-        attributes: ['id', 'to', 'from', 'subject', 'body', 'status', 'sentAt'],
-      });
-      return res.json(emails);
-    } catch (e) {
-      return res.json(null);
-    }
-  }
-
-  // Mostra um e-mail específico pelo ID
-  async show(req, res) {
-    try {
-      const email = await Email.findByPk(req.params.id);
-
-      if (!email) {
-        return res.status(404).json({
-          errors: ['E-mail não encontrado'],
-        });
-      }
-
-      const { id, to, from, subject, body, status, sentAt } = email;
-      return res.json({ id, to, from, subject, body, status, sentAt });
-    } catch (e) {
-      return res.json(null);
-    }
-  }
-
-  // Atualiza os dados de um e-mail existente
-  async update(req, res) {
-    try {
-      const email = await Email.findByPk(req.params.id);
-
-      if (!email) {
-        return res.status(400).json({
-          errors: ['E-mail não encontrado'],
-        });
-      }
-
-      const novosDados = await email.update(req.body);
-      const { id, to, from, subject, body, status, sentAt } = novosDados;
-      return res.json({ id, to, from, subject, body, status, sentAt });
-    } catch (e) {
-      return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
-      });
-    }
-  }
-
-  // Exclui um e-mail existente
-  async delete(req, res) {
-    try {
-      const email = await Email.findByPk(req.params.id);
-
-      if (!email) {
-        return res.status(400).json({
-          errors: ['E-mail não encontrado'],
-        });
-      }
-
-      await email.destroy();
-      return res.json(null);
-    } catch (e) {
-      return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
-      });
-    }
-  }
 }
 
-export default new EmailController();
+// Função para obter todos os e-mails
+export async function getEmails(req, res) {
+    try {
+        const emails = await Email.findAll();  // Buscar todos os e-mails no banco
+        res.status(200).json(emails);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar e-mails.', error });
+    }
+}

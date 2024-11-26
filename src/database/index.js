@@ -1,12 +1,32 @@
-import Sequelize from 'sequelize';
-import databaseConfig from '../config/database';
-import Email from '../models/email';
-import User from '../models/user';
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+import User from '../models/user.js';
+import Email from '../models/email.js';
 
+// Carregar variáveis de ambiente do .env
+dotenv.config();
 
-const models = [Email, User];
+// Inicializar o Sequelize
+const sequelize = new Sequelize(
+  process.env.DB_NAME, // Nome do banco
+  process.env.DB_USER, // Usuário
+  process.env.DB_PASS, // Senha
+  {
+    host: process.env.DB_HOST,       // Host do banco
+    dialect: process.env.DB_DIALECT, // Dialeto (mysql, mariadb, etc.)
+    port: process.env.DB_PORT,       // Porta
+    logging: false,                  // Desabilitar logs do Sequelize
+  }
+);
 
-const connection = new Sequelize(databaseConfig);
+// Inicializar os modelos
+User.init(sequelize);
+Email.init(sequelize);
 
-models.forEach((model) => model.init(connection));
-models.forEach((model) => model.associate && model.associate(connection.models));
+// Configurar associações entre os modelos, se existirem
+User.associate && User.associate(sequelize.models);
+Email.associate && Email.associate(sequelize.models);
+
+// Exportar a instância do Sequelize
+export { sequelize };
+export default sequelize;

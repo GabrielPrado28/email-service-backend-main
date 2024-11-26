@@ -1,16 +1,20 @@
-require('dotenv').config();
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-module.exports = {
-  /* SQLite */
-  dialect: 'sqlite',
-  storage: './db.sqlite',
+// Carregar variáveis de ambiente
+dotenv.config();
 
-  /* ALL */
-  define: {
-    timestamps: true,
-    underscored: true,
-    underscoredAll: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-  },
-};
+// Configuração do Sequelize
+const sequelize = new Sequelize(
+  process.env.DB_NAME, // Nome do banco de dados
+  process.env.DB_USER, // Usuário do banco
+  process.env.DB_PASS, // Senha do banco
+  {
+    host: process.env.DB_HOST || 'localhost',  // Host do banco
+    dialect: 'mariadb',  // Dialeto explicitamente configurado (mysql ou mariadb)
+    port: process.env.DB_PORT || 3307,  // Porta do banco
+    logging: false,  // Desabilitar logs de SQL
+  }
+);
+
+export default sequelize;

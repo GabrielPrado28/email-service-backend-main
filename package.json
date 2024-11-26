@@ -1,11 +1,13 @@
 {
   "name": "phishing-simulation",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node app.js",
+    "type": "module",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -21,8 +23,9 @@
     "dotenv": "^16.0.3",
     "fastify": "^4.17.0",
     "jest": "^29.5.0",
+    "jsonwebtoken": "^9.0.2",
     "nodemon": "^2.0.7",
-    "sequelize-cli": "^6.6.2",
-    "phishing-simulation": "file:"
-  } 
+    "phishing-simulation": "file:",
+    "sequelize-cli": "^6.6.2"
+  }
 }
