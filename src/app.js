@@ -9,8 +9,10 @@ import './database/index.js';
 
 import express from 'express';
 
-import userRoutes from './routes/userRoutes.js';
 import emailRoutes from './routes/emailRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+
 
 
 class App {
@@ -28,6 +30,7 @@ class App {
 
   routes() {   
     this.app.use('/emails/', emailRoutes);
+    this.app.use('/reports/', reportRoutes);
     this.app.use('/users/', userRoutes);
   }
 }
