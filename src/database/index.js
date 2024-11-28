@@ -30,3 +30,7 @@ Email.associate && Email.associate(sequelize.models);
 // Exportar a instância do Sequelize
 export { sequelize };
 export default sequelize;
+
+sequelize.authenticate()
+  .then(() => console.log('Conexão com o banco de dados bem-sucedida!'))
+  .catch((err) => console.error('Erro ao conectar ao banco de dados:', err.message));

@@ -1,60 +1,25 @@
 import Sequelize, { Model } from 'sequelize';
-import bcryptjs from 'bcryptjs';
 
 export default class User extends Model {
   static init(sequelize) {
     super.init({
-      id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      nome: {
+      name: {
         type: Sequelize.STRING,
-        defaultValue: '',
-        validate: {
-          len: {
-            args: [3, 255],
-            msg: 'Campo nome deve ter entre 3 e 255 caracteres',
-          },
-        },
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
-        defaultValue: '',
-        unique: {
-          msg: 'Email já existe',
-        },
-        validate: {
-          isEmail: {
-            msg: 'Email inválido',
-          },
-        },
+        allowNull: false,
+        unique: true,
       },
-      password: {
-        type: Sequelize.VIRTUAL,
-        defaultValue: '',
-        validate: {
-          len: {
-            args: [6, 50],
-            msg: 'A senha precisa ter entre 6 e 50 caracteres',
-          },
-        },
+      group_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
     }, {
       sequelize,
+      tableName: 'users', // Certifique-se de que o nome da tabela está correto
     });
-
-    this.addHook('beforeSave', async (user) => {
-      if (user.password) {
-        user.password_hash = await bcryptjs.hash(user.password, 8);
-      }
-    });
-
     return this;
-  }
-
-  passwordIsValid(password) {
-    return bcryptjs.compare(password, this.password_hash);
   }
 }
